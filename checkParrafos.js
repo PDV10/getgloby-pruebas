@@ -1,4 +1,10 @@
 const fs = require("fs");
+require("dotenv").config();
+console.log("APIKEY desde .env:", process.env.APIKEY);
+
+if (!process.env.APIKEY) {
+  throw new Error("APIKEY no se ha cargado. Verifica tu archivo .env");
+}
 
 // Función async principar para poder usar await luego
 async function main() {
@@ -100,7 +106,7 @@ async function main() {
 
 // Función para detectar el idioma utilizando la API de Google
 async function detectLanguages(parrafos) {
-  const url = `https://translation.googleapis.com/language/translate/v2/detect?key=${apiKey}`;
+  const url = `https://translation.googleapis.com/language/translate/v2/detect?key=${process.env.APIKEY}`;
 
   try {
     const response = await fetch(url, {
