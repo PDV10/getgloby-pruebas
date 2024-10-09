@@ -1,10 +1,5 @@
 const fs = require("fs");
 require("dotenv").config();
-console.log("APIKEY desde .env:", process.env.APIKEY);
-
-if (!process.env.APIKEY) {
-  throw new Error("APIKEY no se ha cargado. Verifica tu archivo .env");
-}
 
 // Función async principar para poder usar await luego
 async function main() {
@@ -55,7 +50,7 @@ async function main() {
   for (const fragmento of fragmentos) {
     const parrafosFrag = fragmento.split("\n");
     const idiomasDetectados = await detectLanguages(parrafosFrag);
-    console.log(idiomasDetectados);
+    /* console.log(idiomasDetectados); */
 
     detectedLanguages = detectedLanguages.concat(idiomasDetectados);
   }
