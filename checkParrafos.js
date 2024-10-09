@@ -100,7 +100,6 @@ async function main() {
 
 // Función para detectar el idioma utilizando la API de Google
 async function detectLanguages(parrafos) {
-  const apiKey = "AIzaSyAnqCouBFeyIhhEzPkwitnvIK48bB-tv3E";
   const url = `https://translation.googleapis.com/language/translate/v2/detect?key=${apiKey}`;
 
   try {
