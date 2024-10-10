@@ -18,21 +18,32 @@ async function main() {
   });
 
   // Dividir los fragmentos en trozos de hasta 5000 caracteres (cantidad maxima soportada por la api)
-  const fragmentos = dividirEnFragmentos(parrafosTruncados, 4999);
+  const fragmentos = dividirEnFragmentos(parrafosTruncados, 5000);
 
-  // Dividir en fragmentos de hasta 5000
+  // Dividir en fragmentos de hasta 5000 y que no supere las 128 frases cada fragmento (separadas por \n)
   function dividirEnFragmentos(parrafos, limiteCaracteres) {
     const fragmentos = [];
     let fragmentoActual = "";
+    let contadorFrases = 0;
+    let maxFrases = 128;
 
     parrafos.forEach((parrafo) => {
-      // Si el fragmento actual y el párrafo a añadir superan el límite, se crea un nuevo fragmento
-      if (fragmentoActual.length + parrafo.length + 1 > limiteCaracteres) {
+      // Contar las frases actuales en el fragmento
+      const frasesEnParrafo = parrafo.split("\n").length;
+
+      // Si el fragmento actual y el párrafo a añadir superan el límite de caracteres o el número máximo de frases,
+      // se crea un nuevo fragmento
+      if (
+        fragmentoActual.length + parrafo.length + 1 > limiteCaracteres ||
+        contadorFrases + frasesEnParrafo > maxFrases
+      ) {
         fragmentos.push(fragmentoActual);
         fragmentoActual = parrafo; // Empezar nuevo fragmento con el párrafo actual
+        contadorFrases = frasesEnParrafo; // Reiniciar el contador de frases
       } else {
         // Añadir el párrafo al fragmento actual
         fragmentoActual += (fragmentoActual ? "\n" : "") + parrafo;
+        contadorFrases += frasesEnParrafo;
       }
     });
 
